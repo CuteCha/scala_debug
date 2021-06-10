@@ -1,0 +1,174 @@
+plugins {
+    id 'groovy'
+    id 'java'
+    id 'scala'
+}
+
+apply plugin: "idea"
+
+apply from: "./dependencies.gradle"
+
+group 'com.gucas.cxq'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+defaultTasks 'build'
+
+repositories {
+    mavenCentral()
+    maven { url "http://mvn.hz.netease.com/artifactory/repo" }
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    maven { url "https://mvnrepository.com/artifact/" }
+    maven { url "http://maven.twttr.com/" }
+    maven { url "https://plugins.gradle.org/m2/" }
+    maven { url "https://jcenter.bintray.com/" }
+    mavenLocal()
+    jcenter()
+}
+
+task copyDependencies(type: Copy) {
+    from configurations.default
+    into 'build/deps'
+}
+
+configurations {
+    provided {
+        dependencies.all { dep ->
+            configurations.default.exclude group: dep.group, module: dep.name
+        }
+    }
+}
+
+configurations.implementation.setCanBeResolved(true)
+
+sourceSets {
+    main {
+        compileClasspath += configurations.provided
+        runtimeClasspath += configurations.provided
+    }
+    test {
+        compileClasspath += configurations.provided
+        runtimeClasspath += configurations.provided
+    }
+}
+
+dependencies {
+    provided("org.apache.spark:spark-core_2.11:2.4.8")
+    provided(libs.scala)
+    provided(libs.scalaRef)
+    provided(libs.groovy)
+    provided(libs.flink_scala)
+    provided(libs.flink_client)
+    provided(libs.flink_stream)
+    provided(libs.flink_kafka) {
+        exclude group: 'org.scala-lang', module: 'scala-compiler'
+        exclude group: 'org.scala-lang', module: 'scala-reflect'
+        exclude group: 'org.scala-lang', module: 'scala-library'
+    }
+
+    compile(libs.flink_redis)
+
+    compile(libs.kafka) {
+        exclude group: 'org.slf4j', module: 'slf4j-api'
+    }
+    compile(libs.jedis)
+    compile(libs.mysql)
+    compile(libs.scopt) {
+        exclude group: 'org.scala-lang', module: 'scala-compiler'
+        exclude group: 'org.scala-lang', module: 'scala-reflect'
+        exclude group: 'org.scala-lang', module: 'scala-library'
+    }
+
+    compile(libs.typesafeConfig) {
+        exclude group: 'org.scala-lang', module: 'scala-compiler'
+        exclude group: 'org.scala-lang', module: 'scala-reflect'
+        exclude group: 'org.scala-lang', module: 'scala-library'
+    }
+    compile(libs.json4s) {
+        exclude group: 'org.scala-lang', module: 'scala-compiler'
+        exclude group: 'org.scala-lang', module: 'scala-reflect'
+        exclude group: 'org.scala-lang', module: 'scala-library'
+        exclude group: 'com.fasterxml.jackson.core'/*, module: 'jackson-core'*/
+    }
+    compile(libs.json4s_native) {exclude group: 'com.fasterxml.jackson.core'/*, module: 'jackson-core'*/}
+    compile(libs.json4s_ext) {exclude group: 'com.fasterxml.jackson.core'/*, module: 'jackson-core'*/}
+
+    provided(libs.jackson_databind)
+
+    //compile(libs.jackson_databind)
+
+    compile(libs.joda_time)
+
+    compile(libs.proto) {force = true}
+    compile(libs.proto_util)
+
+    compile(libs.http_asyn) {exclude group: 'commons-logging'}
+    provided(libs.commons_log)
+
+    //compile(libs.commons_log)
+
+    //testCompile(libs.scalaMock)
+    testCompile(libs.scalaTest)
+    testCompile(libs.junit)
+    testRuntime(libs.pegdown)
+}
+
+idea {
+    module {
+        jdkName = JavaVersion.VERSION_1_8
+        name = "scala_debug"
+        excludeDirs = [file(".gradle")]
+        excludeDirs += file("$buildDir/classes")
+        excludeDirs += file("$buildDir/bundles")
+        excludeDirs += file("$buildDir/packages")
+        excludeDirs += file("$buildDir/dependency-cache")
+        excludeDirs += file("$buildDir/libs")
+        excludeDirs += file("$buildDir/reports")
+        excludeDirs += file("$buildDir/test-results")
+        excludeDirs += file("$buildDir/tmp")
+        excludeDirs += file("$buildDir/matrix")
+        excludeDirs += file("$buildDir/resources")
+        downloadSources = true
+    }
+    project {
+        jdkName = JavaVersion.VERSION_1_8
+        languageLevel = JavaVersion.VERSION_1_8
+        vcs = 'Git'
+    }
+    module {
+    }
+}
+
+test {
+    maxParallelForks = 1
+    testLogging {
+        // Show that tests are run in the command-line output
+        events 'started', 'passed'
+    }
+}
+
+jar {
+    zip64 true
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    } {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+        exclude 'module-info.class'
+    }
+}
+
+task copyToLib(type: Copy) {
+    into "$buildDir/libs/deps"
+    from configurations.compile
+    from configurations.provided
+}
+
+configurations.all {
+    exclude group: "org.slf4j", module: "slf4j-log4j12"
+    exclude group: "log4j", module: "log4j"
+}
