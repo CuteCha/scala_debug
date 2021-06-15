@@ -99,3 +99,29 @@ trait BatchApp {
 }
 
 object Debug05 extends BatchApp with TrovoExpReportSmartFlow
+
+trait Debug05A {
+  def preStart(): Unit = {
+    println("Debug05A ... preStart")
+  }
+}
+
+trait Debug05App {
+  this: Debug05A =>
+  def start(): Unit = {
+    preStart()
+  }
+
+  def main(args: Array[String]): Unit = {
+    start()
+  }
+}
+
+trait Debug05B extends Debug05A {
+  override def preStart(): Unit = {
+    super.preStart()
+    println("Debug05B ... preStart")
+  }
+}
+
+object Debug0501 extends Debug05App with Debug05B
