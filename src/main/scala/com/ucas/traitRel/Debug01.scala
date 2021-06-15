@@ -11,6 +11,7 @@ object Debug {
     val b = new MyBall
     println(b.describe())
     b.info
+    println("-" * 72)
     val b2 = new MyBall2
     println(b2.describe())
     b2.info
@@ -42,7 +43,7 @@ object Debug {
   }
 
   def main(args: Array[String]): Unit = {
-    test03()
+    test02()
   }
 
 }
@@ -70,7 +71,9 @@ trait Ball {
     "ball"
   }
 
-  def info(): Unit = {}
+  def info(): Unit = {
+    println("Ball")
+  }
 }
 
 trait Color extends Ball {
@@ -105,7 +108,7 @@ class MyBall extends Category with Color {
 
 class MyBall2 extends Color with Category {
   override def describe(): String = {
-    "my ball is a " + super.describe()
+    "my ball2 is a " + super.describe()
   }
 
   //  override def info: Unit = {
