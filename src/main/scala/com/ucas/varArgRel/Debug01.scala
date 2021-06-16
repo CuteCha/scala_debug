@@ -2,7 +2,7 @@ package com.ucas.varArgRel
 
 object Debug01 {
   def main(args: Array[String]) {
-    test01()
+    test02()
   }
 
   def test01(): Unit = {
@@ -17,5 +17,25 @@ object Debug01 {
 
   def printAll(args: String*): Unit = {
     args.foreach(println)
+  }
+
+  def test02(): Unit = {
+    seqArg("a", Array("b"))
+    println("-" * 72)
+    seqArg("a", Array("b1","b2"), Array("c"))
+  }
+
+  def seqArg(name: scala.Predef.String, args: scala.Seq[scala.Predef.String]): Unit = {
+    println(name)
+    args.foreach(println)
+  }
+
+  def seqArg(name: scala.Predef.String,
+             args: scala.Seq[scala.Predef.String],
+             subArgs: scala.Seq[scala.Predef.String]): Unit = {
+    println(name)
+    args.foreach(println)
+    println("<>" * 36)
+    subArgs.foreach(println)
   }
 }
