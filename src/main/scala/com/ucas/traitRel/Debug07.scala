@@ -113,3 +113,55 @@ object Debug07 {
   }
 
 }
+
+trait TA {
+  def preStart(): Unit = {
+    println("TA ... preStart")
+  }
+}
+
+trait TB01 extends TA {
+  override def preStart(): Unit = {
+    super.preStart()
+    println("TB01 ... preStart")
+  }
+}
+
+trait TB02 extends TA {
+  override def preStart(): Unit = {
+    super.preStart()
+    println("TB02 ... preStart")
+  }
+}
+
+trait TC01 extends TB01 {
+  override def preStart(): Unit = {
+    super.preStart()
+    println("TC01 ... preStart")
+  }
+}
+
+trait TC02 extends TB02 {
+  override def preStart(): Unit = {
+    super.preStart()
+    println("TC02 ... preStart")
+  }
+}
+
+object Debug0701 extends TC01 with TC02 {
+  def start(): Unit = {
+    preStart()
+    /*
+      TA ... preStart
+      TB01 ... preStart
+      TC01 ... preStart
+      TB02 ... preStart
+      TC02 ... preStart
+    * 广度优先
+    */
+  }
+
+  def main(args: Array[String]): Unit = {
+    start()
+  }
+}
