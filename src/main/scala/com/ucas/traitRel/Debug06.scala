@@ -1,15 +1,15 @@
 package com.ucas.traitRel
 
 trait A {
-  def hello(): String = "A-"
+  def hello(): String = "A"
 }
 
 trait B extends A {
-  override def hello(): String = super.hello() + "B-"
+  override def hello(): String = "B-" + super.hello()
 }
 
 trait C extends A {
-  override def hello(): String = super.hello() + "C-"
+  override def hello(): String = "C-" + super.hello()
 }
 
 trait D1 extends B with C {
@@ -41,14 +41,24 @@ object Debug0603 extends App with D3 {
 }
 
 class D4 extends B with C {
-  override def hello(): String = super.hello() + "D4-"
+  override def hello(): String = "D4-" + super.hello()
 }
 
 class D5 extends C with B {
-  override def hello(): String = super.hello() + "D5-"
+  override def hello(): String = "D5-" + super.hello()
 }
 
 object Debug0604 extends App {
   println(new D4().hello())
   println(new D5().hello())
 }
+
+class D6 extends B with C {
+  override def hello(): String = "D6-" + super.hello()
+
+  def main(args: Array[String]): Unit = {
+    println(hello())
+  }
+}
+
+object Debug0605 extends D6

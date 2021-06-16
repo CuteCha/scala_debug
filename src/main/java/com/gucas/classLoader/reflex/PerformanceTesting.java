@@ -1,8 +1,6 @@
 package com.gucas.classLoader.reflex;
 
-import com.google.gson.Gson;
 import com.gucas.classLoader.utils.User;
-import org.codehaus.jettison.json.JSONObject;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -28,11 +26,11 @@ public class PerformanceTesting {
     public void reflexCreate1() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         User user = new User();
         Class userClass = user.getClass();
-        Method getName = userClass.getDeclaredMethod("getName", null);
+        Method getName = userClass.getDeclaredMethod("getName");
 
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < 100000000; i++) {
-            getName.invoke(user, null);
+            getName.invoke(user);
         }
         long endTime = System.currentTimeMillis();
 
@@ -44,12 +42,12 @@ public class PerformanceTesting {
     public void reflexCreate2() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         User user = new User();
         Class userClass = user.getClass();
-        Method getName = userClass.getDeclaredMethod("getName", null);
+        Method getName = userClass.getDeclaredMethod("getName");
         getName.setAccessible(true);
 
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < 100000000; i++) {
-            getName.invoke(user, null);
+            getName.invoke(user);
         }
         long endTime = System.currentTimeMillis();
 
