@@ -125,3 +125,5 @@ trait Debug05B extends Debug05A {
 }
 
 object Debug0501 extends Debug05App with Debug05B
+
+object Debug0502 extends Debug05B with Debug05App
