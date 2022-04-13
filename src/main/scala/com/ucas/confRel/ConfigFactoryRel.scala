@@ -16,17 +16,27 @@ object ConfigFactoryRel {
     }
   }
 
+  case class NumerousFea(s: Int, n: String, c: String)
+
   def test01(): Unit = {
     val confPath = "./data/configFactory.conf"
-    val conf=loadConf(confPath)
+    val conf = loadConf(confPath)
     println(conf.getString("app.spark.name"))
     println(conf.getList("app.input.file.data.part"))
     println(conf.getList("app.input.file.data.part").toArray.toList)
     println(conf.getStringList("app.input.file.data.part").toArray.toList)
 
-    val inputConf=conf.getConfig("app.input")
+    val inputConf = conf.getConfig("app.input")
     println(inputConf.getInt("part"))
     println(inputConf.getBoolean("file.cmdArgs"))
+
+    val slots = conf.getStringList("app.model.slots").toArray.toList
+    println(slots)
+    slots
+      .map(x=>{
+        val t=x.toString.split("\\|")
+        NumerousFea(t(0).toInt,t(1),t(2))
+      }).foreach(x=>{println(s"${x.c}/${x.s}/${x.n}")})
 
   }
 
