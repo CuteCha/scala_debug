@@ -1,6 +1,8 @@
 package com.ucas.confRel
 
 import com.typesafe.config.{Config, ConfigFactory}
+import scala.util.Try
+import scala.collection.JavaConversions._
 
 import java.io.File
 
@@ -30,13 +32,12 @@ object ConfigFactoryRel {
     println(inputConf.getInt("part"))
     println(inputConf.getBoolean("file.cmdArgs"))
 
-    val slots = conf.getStringList("app.model.slots").toArray.toList
+    val slots = Try(conf.getStringList("app.model.slots").toList).getOrElse(Nil)
     println(slots)
-    slots
-      .map(x=>{
-        val t=x.toString.split("\\|")
-        NumerousFea(t(0).toInt,t(1),t(2))
-      }).foreach(x=>{println(s"${x.c}/${x.s}/${x.n}")})
+    slots.map(x => {
+      val t = x.split("\\|")
+      NumerousFea(t(0).toInt, t(1), t(2))
+    }).foreach(x => println(s"${x.c}/${x.s}/${x.n}"))
 
   }
 
