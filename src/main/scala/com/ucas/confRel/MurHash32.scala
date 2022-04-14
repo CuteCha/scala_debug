@@ -51,6 +51,7 @@ object MurHash32 {
   val seed = 0xe17a1465
   val m = 0xc6a4a7935bd1e995L
   val r = 47
+  val n = 32
 
   def stringHash(str: String): Long = {
     val data = str.getBytes
@@ -89,6 +90,15 @@ object MurHash32 {
     h ^= h >>> r
 
     h
+  }
+
+  def numHash(str: String): Int = {
+    var v = stringHash(str)
+    if (v < 0) {
+      v = -v
+    }
+
+    (v >> n).toInt
   }
 
 }
