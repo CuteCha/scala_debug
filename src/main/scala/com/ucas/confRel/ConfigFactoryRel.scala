@@ -1,10 +1,12 @@
 package com.ucas.confRel
 
+import com.google.common.hash.Hashing
 import com.typesafe.config.{Config, ConfigFactory}
+
 import scala.util.Try
 import scala.collection.JavaConversions._
-
 import java.io.File
+import java.nio.charset.Charset
 
 
 object ConfigFactoryRel {
@@ -41,8 +43,28 @@ object ConfigFactoryRel {
 
   }
 
+  def test02(): Unit = {
+    //val data = "scala"
+    //println(hash(data, 97))
+    //println(murHash(data, 97)) //1403984909
+    //val str = "xxx123"
+    //println(MurHash32.stringHash(str))
+
+    val lst = List("python", "golang", "scala", "java", "c++", "c", "123")
+    lst.foreach(x => println(s"${x}: ${MurHash32.stringHash(x)}"))
+  }
+
+  def hash(s: String, seed: Int): String = {
+    Hashing.murmur3_32(seed).hashString(s, Charset.forName("UTF-8")).asInt().abs.toString
+  }
+
+  def murHash(s: String, seed: Int): String = {
+    MurHash32.stringHash(s, seed).abs.toString
+  }
+
+
   def main(args: Array[String]): Unit = {
-    test01()
+    test02()
   }
 
 }
