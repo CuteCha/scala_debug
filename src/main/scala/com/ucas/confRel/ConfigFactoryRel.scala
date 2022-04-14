@@ -122,7 +122,7 @@ object ConfigFactoryRel {
 
 
   def main(args: Array[String]): Unit = {
-    test03()
+    test02()
   }
 
 }

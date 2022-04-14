@@ -92,13 +92,13 @@ object MurHash32 {
     h
   }
 
-  def numHash(str: String): Int = {
+  def numHash(str: String): String = {
     var v = stringHash(str)
     if (v < 0) {
       v = -v
     }
 
-    (v >> n).toInt
+    (v >> n).toString
   }
 
 }
