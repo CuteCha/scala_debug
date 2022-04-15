@@ -50,7 +50,7 @@ object ConfigFactoryRel {
     //val str = "xxx123"
     //println(MurHash32.stringHash(str))
 
-    val lst = List("python", "golang", "scala", "java", "c++", "c", "123")
+    val lst = List("python", "golang", "scala", "java", "c++", "c", "123","-","","123456789")
     lst.foreach(x => println(s"${x}: ${MurHash32.stringHash(x)}"))
     println("-----------------------------")
     lst.foreach(x => println(s"${x}: ${MurHash32.numHash(x)}"))

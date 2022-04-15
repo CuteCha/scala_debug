@@ -60,7 +60,7 @@ object MurHash32 {
     val length8 = length / 8
     for (i <- 0 until length8) {
       val i8 = i * 8
-      var k = 0.to(8).map(j => (data(i8 + j) & 0xff).toLong << (j * 8)).sum
+      var k = 0.to(7).map(j => (data(i8 + j) & 0xff).toLong << (j * 8)).sum
       k *= m
       k ^= k >>> r
       k *= m
