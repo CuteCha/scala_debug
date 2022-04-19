@@ -39,7 +39,7 @@ object ConfigFactoryRel {
     slots.map(x => {
       val t = x.split("\\|")
       NumerousFea(t(0).toInt, t(1), t(2))
-    }).foreach(x => println(s"${x.c}/${x.s}/${x.n}"))
+    }).foreach(x => println(s"${x.c}/${x.s}/${x.n.split("&").mkString(",")}"))
 
   }
 
@@ -122,7 +122,7 @@ object ConfigFactoryRel {
 
 
   def main(args: Array[String]): Unit = {
-    test02()
+    test01()
   }
 
 }
