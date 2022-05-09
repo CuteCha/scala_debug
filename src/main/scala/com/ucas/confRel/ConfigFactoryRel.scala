@@ -50,7 +50,7 @@ object ConfigFactoryRel {
     //val str = "xxx123"
     //println(MurHash32.stringHash(str))
 
-    val lst = List("python", "golang", "scala", "java", "c++", "c", "123","-","","123456789")
+    val lst = List("python", "golang", "scala", "java", "c++", "c", "123", "-", "", "123456789")
     lst.foreach(x => println(s"${x}: ${MurHash32.stringHash(x)}"))
     println("-----------------------------")
     lst.foreach(x => println(s"${x}: ${MurHash32.numHash(x)}"))
@@ -120,9 +120,29 @@ object ConfigFactoryRel {
     println(s"[$bitStr](len=$l) $i >> 2 = [$rBitStr](len=$rL) $r")
   }
 
+  def test04(): Unit = {
+    import scala.io.Source
+    import java.io.{FileWriter, BufferedWriter, File}
+
+    val inFilePath = "./data/example.txt"
+    val outFilePath = "./data/hash_str.txt"
+    val writer = new BufferedWriter(new FileWriter(new File(outFilePath)))
+
+    val strList = Source.fromFile(inFilePath).getLines()
+      .flatMap(x => x.split("\t")).toSet.toList
+    //.foreach(println)
+    //.foreach(x => writer.write(s"${NumHash.numHash(x)}:$x"))
+
+    for (x <- strList) {
+      writer.write(s"${NumHash.numHash(x)};$x\n")
+    }
+
+    writer.close()
+  }
+
 
   def main(args: Array[String]): Unit = {
-    test01()
+    test04()
   }
 
 }
