@@ -14,11 +14,11 @@ public class ADTest {
     private final DoubleRealFactory RNFactory = DoubleRealFactory.instance();
     private final DifferentialRealFunctionFactory<DoubleReal> DFFactory = new DifferentialRealFunctionFactory<DoubleReal>(RNFactory);
 
-    private void check(double i_expected, DifferentialFunction<DoubleReal> i_f) {
-        String func_str = i_f.toString();
-        double func_value = i_f.getValue().doubleValue();
+    private void check(double valueExpected, DifferentialFunction<DoubleReal> func) {
+        String funcStr = func.toString();
+        double funcValue = func.getValue().doubleValue();
 
-        System.out.println(func_str + " = " + func_value + " is expected as " + i_expected);
+        System.out.println("correct value: " + valueExpected + "\tcompute value: " + funcValue + " = " + funcStr);
     }
 
     @Test
