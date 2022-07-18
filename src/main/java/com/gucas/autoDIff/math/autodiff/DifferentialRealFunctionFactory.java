@@ -11,8 +11,7 @@ public class DifferentialRealFunctionFactory<X extends RealNumber<X>> {
 	protected AbstractRealNumberFactory<X> m_factory;	
 
 	/**
-	 * @param i_RNFactory
-	 * @param i_RFFactory
+	 * @param i_factory
 	 */
 	public DifferentialRealFunctionFactory(AbstractRealNumberFactory<X> i_factory) {
 		if (i_factory != null) {
