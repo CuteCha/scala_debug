@@ -108,6 +108,8 @@ dependencies {
     compile(libs.http_asyn) {exclude group: 'commons-logging'}
     provided(libs.commons_log)
 
+    compile fileTree(dir: 'data', include: [ 'ia_math.jar'])
+
     //compile(libs.commons_log)
 
     //testCompile(libs.scalaMock)
