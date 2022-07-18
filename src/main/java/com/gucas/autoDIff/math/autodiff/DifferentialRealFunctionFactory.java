@@ -133,8 +133,7 @@ public class DifferentialRealFunctionFactory<X extends RealNumber<X>> {
 				// return new Inverse<X>( new Square<X>( cos(arg())
 				// )).multi(arg().diff(i_v));
 				// return pow(cos(arg()), -2).multi(arg().diff(i_v));
-				return (new PolynomialTerm<X>(1, cos(arg()), -2)).mul(arg()
-						.diff(i_v));
+				return (new PolynomialTerm<X>(1, cos(arg()), -2)).mul(arg().diff(i_v));
 			}
 
 			@Override
