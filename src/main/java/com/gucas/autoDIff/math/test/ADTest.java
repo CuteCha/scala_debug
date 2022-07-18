@@ -14,7 +14,7 @@ public class ADTest {
     private final DoubleRealFactory RNFactory = DoubleRealFactory.instance();
     private final DifferentialRealFunctionFactory<DoubleReal> DFFactory = new DifferentialRealFunctionFactory<DoubleReal>(RNFactory);
 
-    private void test(double i_expected, DifferentialFunction<DoubleReal> i_f) {
+    private void check(double i_expected, DifferentialFunction<DoubleReal> i_f) {
         String func_str = i_f.toString();
         double func_value = i_f.getValue().doubleValue();
 
@@ -49,11 +49,11 @@ public class ADTest {
         double cxy = Math.cos(vx * vy);
         double sxy = Math.sin(vx * vy);
 
-        test(vq * vx * (cxy + vy), h);
-        test(vq * (cxy + vy) + vq * vx * (-sxy * vy), dhpx);
-        test(vq * vx * (-sxy * vx + 1.0), dhpy);
-        test(vq * (-sxy * vy) + vq * (-sxy * vy) + vq * vx * (-cxy * vy * vy), d2hpxpx);
-        test(vq * (-sxy * vx + 1.0) + vq * vx * (-sxy - cxy * vx * vy), d2hpypx);
+        check(vq * vx * (cxy + vy), h);
+        check(vq * (cxy + vy) + vq * vx * (-sxy * vy), dhpx);
+        check(vq * vx * (-sxy * vx + 1.0), dhpy);
+        check(vq * (-sxy * vy) + vq * (-sxy * vy) + vq * vx * (-cxy * vy * vy), d2hpxpx);
+        check(vq * (-sxy * vx + 1.0) + vq * vx * (-sxy - cxy * vx * vy), d2hpypx);
 
 
         System.out.println("====================================================");
@@ -65,11 +65,11 @@ public class ADTest {
         cxy = Math.cos(vx * vy);
         sxy = Math.sin(vx * vy);
 
-        test(vq * vx * (cxy + vy), h);
-        test(vq * (cxy + vy) + vq * vx * (-sxy * vy), dhpx);
-        test(vq * vx * (-sxy * vx + 1.0), dhpy);
-        test(vq * (-sxy * vy) + vq * (-sxy * vy) + vq * vx * (-cxy * vy * vy), d2hpxpx);
-        test(vq * (-sxy * vx + 1.0) + vq * vx * (-sxy - cxy * vx * vy), d2hpypx);
+        check(vq * vx * (cxy + vy), h);
+        check(vq * (cxy + vy) + vq * vx * (-sxy * vy), dhpx);
+        check(vq * vx * (-sxy * vx + 1.0), dhpy);
+        check(vq * (-sxy * vy) + vq * (-sxy * vy) + vq * vx * (-cxy * vy * vy), d2hpxpx);
+        check(vq * (-sxy * vx + 1.0) + vq * vx * (-sxy - cxy * vx * vy), d2hpypx);
 
     }
 
