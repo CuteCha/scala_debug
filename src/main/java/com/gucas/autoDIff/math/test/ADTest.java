@@ -45,16 +45,31 @@ public class ADTest {
         //p2h/pypx = q*( -sin(x*y)*x + 1.0 ) + q*x*( -sin(x*y) - cos(x*y)*y*y )
         DifferentialFunction<DoubleReal> d2hpypx = dhpx.diff(y);
 
-        double hc = Math.cos(vx * vy) + vy;
-        double hs = -Math.sin(vx * vy) * vy;
-        double cxy = -Math.cos(vx * vy) * vy * vy;
-        double sxy = -Math.sin(vx * vy);
 
-        test(vq * vx * hc, h);
-        test(vq * hc + vq * vx * hs, dhpx);
-        test(vq * vx * (hs + 1.0), dhpy);
-        test(vq * (hs) + vq * (hs) + vq * vx * cxy, d2hpxpx);
-        test(vq * (sxy * vx + 1.0) + vq * vx * (sxy + cxy), d2hpypx);
+        double cxy = Math.cos(vx * vy);
+        double sxy = Math.sin(vx * vy);
+
+        test(vq * vx * (cxy + vy), h);
+        test(vq * (cxy + vy) + vq * vx * (-sxy * vy), dhpx);
+        test(vq * vx * (-sxy * vx + 1.0), dhpy);
+        test(vq * (-sxy * vy) + vq * (-sxy * vy) + vq * vx * (-cxy * vy * vy), d2hpxpx);
+        test(vq * (-sxy * vx + 1.0) + vq * vx * (-sxy - cxy * vx * vy), d2hpypx);
+
+
+        System.out.println("====================================================");
+        vx = 4.0;
+        vy = 7.0;
+        x.set(new DoubleReal(vx));
+        y.set(new DoubleReal(vy));
+
+        cxy = Math.cos(vx * vy);
+        sxy = Math.sin(vx * vy);
+
+        test(vq * vx * (cxy + vy), h);
+        test(vq * (cxy + vy) + vq * vx * (-sxy * vy), dhpx);
+        test(vq * vx * (-sxy * vx + 1.0), dhpy);
+        test(vq * (-sxy * vy) + vq * (-sxy * vy) + vq * vx * (-cxy * vy * vy), d2hpxpx);
+        test(vq * (-sxy * vx + 1.0) + vq * vx * (-sxy - cxy * vx * vy), d2hpypx);
 
     }
 
