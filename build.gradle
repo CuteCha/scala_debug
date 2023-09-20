@@ -55,6 +55,7 @@ sourceSets {
 }
 
 dependencies {
+    implementation 'com.hankcs:hanlp:portable-1.8.4'
     provided("org.apache.spark:spark-core_2.11:2.4.8")
     provided("org.apache.spark:spark-sql_2.11:2.4.8")
     provided(libs.scala)
